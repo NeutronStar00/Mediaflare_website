@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 
 const ServiceCard = ({ image, title, description }) => (
   <div className="flex-shrink-0 w-96 snap-start">
@@ -12,7 +12,8 @@ const ServiceCard = ({ image, title, description }) => (
 );
 
 const Services = () => {
-  const services = [
+  const scrollRef = useRef(null);
+  const [services, setServices] = useState([
     {
       image: "/images/design.png",
       title: "Web Design and Development",
@@ -34,27 +35,80 @@ const Services = () => {
       description: "Our UI/UX design services focus on creating intuitive, user-friendly interfaces that enhance user engagement and satisfaction. We combine aesthetics with functionality to deliver designs that not only look great but also provide an optimal user experience across all devices and platforms."
     },
     {
-        image: "/images/design.png",
-        title: "UI/UX Design",
-        description: "Our UI/UX design services focus on creating intuitive, user-friendly interfaces that enhance user engagement and satisfaction. We combine aesthetics with functionality to deliver designs that not only look great but also provide an optimal user experience across all devices and platforms."
+      image: "/images/design.png",
+      title: "UI/UX Design",
+      description: "Our UI/UX design services focus on creating intuitive, user-friendly interfaces that enhance user engagement and satisfaction. We combine aesthetics with functionality to deliver designs that not only look great but also provide an optimal user experience across all devices and platforms."
+    }
+  ]);
+
+  useEffect(() => {
+    const duplicatedServices = [...services, ...services];
+    setServices(duplicatedServices);
+  }, []);
+
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      const scrollAmount = direction === 'left' ? -400 : 400;
+      const currentScroll = scrollRef.current.scrollLeft;
+      const maxScroll = scrollRef.current.scrollWidth - scrollRef.current.clientWidth;
+
+      if (direction === 'right' && currentScroll >= maxScroll - 10) {
+        scrollRef.current.scrollTo({ left: 0, behavior: 'auto' });
+      } else if (direction === 'left' && currentScroll <= 10) {
+        scrollRef.current.scrollTo({ left: maxScroll, behavior: 'auto' });
+      } else {
+        scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
       }
-  ];
+    }
+  };
+
+  useEffect(() => {
+    const autoScroll = setInterval(() => {
+      scroll('right');
+    }, 3000);
+
+    return () => clearInterval(autoScroll);
+  }, []);
 
   return (
-    <div className='py-10 px-20 mb-10'>
-      <div className='text-6xl py-10 text-white font-semibold tracking-wide'>
+    <div className='px-10 py-10 relative'>
+      <div className='text-6xl text-white font-semibold tracking-wide'>
         <h1>Our</h1> 
         <h1 className='text-emerald-500'>Services</h1>
       </div>
       <div className="relative w-full overflow-hidden">
-        <div className="flex overflow-x-auto gap-10 snap-x snap-mandatory no-scrollbar">
+        <div 
+          ref={scrollRef}
+          className="flex overflow-x-auto gap-10 snap-x snap-mandatory no-scrollbar"
+          style={{ scrollBehavior: 'smooth' }}
+        >
           {services.map((service, index) => (
             <ServiceCard key={index} {...service} />
           ))}
         </div>
+        <button 
+          onClick={() => scroll('left')} 
+          className="absolute left-1 top-1/3 transform -translate-y-1/2 bg-emerald-500 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+          aria-label="Scroll left"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button 
+          onClick={() => scroll('right')} 
+          className="absolute right-1 top-1/3 transform -translate-y-1/2 bg-emerald-500 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+          aria-label="Scroll right"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
       </div>
     </div>
   );
 };
 
 export default Services;
+
+

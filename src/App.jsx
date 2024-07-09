@@ -14,6 +14,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const App = () => {
+  const aboutRef = useRef(null);
+  const servicesRef = useRef(null);
+  const projectsRef = useRef(null);
   const contactRef = useRef(null);
 
   useEffect(() => {
@@ -26,7 +29,12 @@ const App = () => {
 
   return (
     <div>
-      <Header />
+      <Header 
+        aboutRef={aboutRef}
+        servicesRef={servicesRef}
+        projectsRef={projectsRef}
+        contactRef={contactRef}
+      />
       <div className='w-full relative bg-emerald-500'>
         <Hero />
         <ClientLogos />
@@ -34,10 +42,16 @@ const App = () => {
         <div className='h-10'></div>
       </div>
       <div className='w-full min-h-screen bg-black'>
-        <About />
-        <Services />
+        <div ref={aboutRef}>
+          <About />
+        </div>
+        <div ref={servicesRef}>
+          <Services />
+        </div>
       </div>
-      <Projects />
+      <div ref={projectsRef}>
+        <Projects />
+      </div>
       <div ref={contactRef}>
         <ContactPage />
       </div>
