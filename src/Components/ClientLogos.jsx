@@ -9,7 +9,7 @@ const ClientLogos = () => {
     "/images/logo_3.png",
     "/images/logo_4.png",
     "/images/logo_5.png",
-    "/images/logo_6.png"
+    "/images/logo_6.jpg"
   ];
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const ClientLogos = () => {
   return (
     <>
       <motion.div
-        className='text-2xl text-white px-10'
+        className='text-2xl text-black px-10 py-3'
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -38,7 +38,7 @@ const ClientLogos = () => {
       </motion.div>
       
       {loading ? (
-        <div className="flex items-center justify-center h-[28rem] py-10">
+        <div className="flex items-center justify-center h-[28rem]">
           <motion.div
             className="loader"
             animate={{ rotate: 360 }}
@@ -53,7 +53,7 @@ const ClientLogos = () => {
           />
         </div>
       ) : (
-        <div className="scroll-container overflow-hidden w-full h-[28rem] py-10 relative">
+        <div className="scroll-container overflow-hidden w-full h-[28rem] mb-0 relative bg-white">
           <motion.div
             className="scroll-content flex"
             initial={{ x: '100%' }}

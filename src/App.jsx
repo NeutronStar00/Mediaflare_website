@@ -35,11 +35,9 @@ const App = () => {
         projectsRef={projectsRef}
         contactRef={contactRef}
       />
-      <div className='w-full relative bg-emerald-500'>
+      <div className='w-full relative bg-customPurple'>
         <Hero />
         <ClientLogos />
-        <div className='hidden md:block stripe-background'></div>
-        <div className='h-10'></div>
       </div>
       <div className='w-full min-h-screen bg-black'>
         <div ref={aboutRef}>

@@ -1,12 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
 
 const ServiceCard = ({ image, title, description }) => (
-  <div className="flex-shrink-0 w-96 snap-start">
-    <div className="w-96">
-      <img className="object-cover w-1/2" src={image} alt="" />
-      <h2 className="text-white text-xl font-semibold">{title}</h2>
-      <div className="w-10 mt-5 h-0.5 bg-emerald-400"></div>
-      <p className="text-white tracking-normal py-4 leading-loose text-wrap">{description}</p>
+  <div className="flex-shrink-0 w-full sm:w-80 md:w-96 snap-start px-4 sm:px-2">
+    <div className="w-full">
+      <img className="object-cover w-1/2 h-32 sm:h-40" src={image} alt="" />
+      <h2 className="text-white text-xl font-semibold mt-4">{title}</h2>
+      <div className="w-10 mt-3 h-0.5 bg-emerald-400"></div>
+      <p className="text-white text-sm sm:text-base tracking-normal py-4 leading-relaxed break-words">{description}</p>
     </div>
   </div>
 );
@@ -74,7 +74,7 @@ const Services = () => {
     <div className='px-10 py-10 relative'>
       <div className='text-6xl text-white font-semibold tracking-wide'>
         <h1>Our</h1> 
-        <h1 className='text-emerald-500'>Services</h1>
+        <h1 className='text-emerald-500 mb-20'>Services</h1>
       </div>
       <div className="relative w-full overflow-hidden">
         <div 
@@ -88,7 +88,7 @@ const Services = () => {
         </div>
         <button 
           onClick={() => scroll('left')} 
-          className="absolute left-1 top-1/3 transform -translate-y-1/2 bg-emerald-500 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+          className="absolute left-1 top-1/4 transform -translate-y-1/2 bg-emerald-500 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-400"
           aria-label="Scroll left"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -97,7 +97,7 @@ const Services = () => {
         </button>
         <button 
           onClick={() => scroll('right')} 
-          className="absolute right-1 top-1/3 transform -translate-y-1/2 bg-emerald-500 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+          className="absolute right-1 top-1/4 transform -translate-y-1/2 bg-emerald-500 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-400"
           aria-label="Scroll right"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

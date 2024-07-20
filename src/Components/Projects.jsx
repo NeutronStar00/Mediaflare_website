@@ -4,12 +4,17 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const ProjectSlide = ({ title, image, index, isMobile }) => (
+const ProjectSlide = ({ title, image, index, isMobile, category, client, duration }) => (
   <div className={isMobile ? "w-full h-screen flex flex-col items-center justify-center p-4" : "absolute inset-0 flex items-center justify-center"}>
-    <div className={isMobile ? "w-full h-full bg-black flex flex-col items-center justify-center rounded-3xl" : "w-[80vw] h-[80vh] bg-black flex items-center justify-center rounded-3xl"}>
-      <h2 className={`text-white ${isMobile ? "text-4xl" : "text-7xl"} font-bold whitespace-pre-line ${isMobile ? "mb-4" : "w-1/2"} text-center`}>
-        {title}
-      </h2> 
+    <div className={isMobile ? "w-full h-full bg-black flex flex-col items-center justify-center rounded-3xl p-4" : "w-[80vw] h-[80vh] bg-black flex items-center justify-center rounded-3xl"}>
+      <div className={`text-white ${isMobile ? "w-full" : "w-1/2"} flex flex-col items-center`}>
+        <h2 className={`${isMobile ? "text-3xl" : "text-5xl"} font-bold whitespace-pre-line text-center mb-4`}>
+          {title}
+        </h2>
+        <p className={`${isMobile ? "text-sm" : "text-base"} text-center mb-2`}>Category: {category}</p>
+        <p className={`${isMobile ? "text-sm" : "text-base"} text-center mb-2`}>Client: {client}</p>
+        <p className={`${isMobile ? "text-sm" : "text-base"} text-center mb-4`}>Duration: {duration}</p>
+      </div>
       <img 
         src={image} 
         alt={title} 
@@ -21,9 +26,27 @@ const ProjectSlide = ({ title, image, index, isMobile }) => (
 
 const Projects = () => {
   const projects = [
-    { title: "Aarohan\nFarms", image: "/images/project_1.png" },
-    { title: "Drishva Digital \nSolutions", image: "/images/project_2.png" },
-    { title: "Medlist", image: "/images/project_3.png" }
+    { 
+      title: "Aarohan\nFarms", 
+      image: "/images/project_1.png",
+      category: "Web Design",
+      client: "Firtech Solution Inc",
+      duration: "3 weeks"
+    },
+    { 
+      title: "Drishva Digital \nSolutions", 
+      image: "/images/project_2.png",
+      category: "Web Design",
+      client: "Firtech Solution Inc",
+      duration: "3 weeks"
+    },
+    { 
+      title: "Medlist", 
+      image: "/images/project_3.png",
+      category: "Web Design",
+      client: "Firtech Solution Inc",
+      duration: "3 weeks"
+    }
   ];
 
   const containerRef = useRef(null);
@@ -58,7 +81,6 @@ const Projects = () => {
         scrub: 0.5,
         pin: true,
         anticipatePin: 1,
-        end: () => `+=${container.offsetHeight * (projects.length - 0.5)}`,
         onUpdate: (self) => {
           const progress = self.progress;
           const slideIndex = Math.min(
@@ -108,7 +130,7 @@ const Projects = () => {
 
   if (isMobile) {
     return (
-      <div className="bg-gray-900">
+      <div className="bg-orange-600">
         <h1 className="text-2xl font-bold text-white text-center py-4 uppercase">Our Work</h1>
         {projects.map((project, index) => (
           <ProjectSlide key={index} {...project} index={index} isMobile={true} />

@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Header = ({ aboutRef, servicesRef, projectsRef, contactRef }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const menuRef = useRef(null);
 
   const scrollToSection = (ref) => {
     ref.current.scrollIntoView({ behavior: 'smooth' });
-    setIsOpen(false); // Close mobile menu if open
+    setIsOpen(false);
   };
   
   const toggleMenu = () => {
@@ -16,17 +17,21 @@ const Header = ({ aboutRef, servicesRef, projectsRef, contactRef }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsOpen(false);
       }
     };
 
     window.addEventListener('scroll', handleScroll);
+    document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -37,9 +42,11 @@ const Header = ({ aboutRef, servicesRef, projectsRef, contactRef }) => {
 
   return (
     <div 
-      className={`w-screen h-20 flex justify-between items-center gap-4 px-4 py-1 text-white fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-black bg-opacity-50' : 'bg-[#10B981]'
-      }`}
+    className={`w-screen h-20 flex justify-between items-center gap-4 px-4 py-1 ${
+      isScrolled ? 'text-black' : 'text-black'
+    } fixed top-0 left-0 right-0 z-50 transition-all ease-in-out duration-0 ${
+      isScrolled ? 'bg-customBlue bg-opacity-80' : 'bg-customBlue bg-opacity-100'
+    }`}
     >
       <div className='object-cover w-24'><img src="/images/mediaflarelogo.png" alt="Logo" /></div>
 
@@ -59,6 +66,7 @@ const Header = ({ aboutRef, servicesRef, projectsRef, contactRef }) => {
             exit={{ opacity: 0 }}
           >
             <motion.div 
+              ref={menuRef}
               className="absolute right-0 top-0 bottom-0 w-64 bg-white shadow-lg"
               variants={menuVariants}
               initial="closed"
@@ -78,22 +86,22 @@ const Header = ({ aboutRef, servicesRef, projectsRef, contactRef }) => {
 
       {/* Desktop Menu */}
       <div className='hidden md:flex justify-center uppercase font-semibold items-center gap-14 text-lg'>
-        <a onClick={() => scrollToSection(aboutRef)} className='relative group hover:text-[#0B1CB0] transition-colors cursor-pointer'>
+        <a onClick={() => scrollToSection(aboutRef)} className='relative group hover:text-[#ff3c00] transition-colors cursor-pointer'>
           About us
-          <span className="block h-0.5 bg-transparent group-hover:bg-[#0B1CB0] transition-all duration-300 absolute bottom-0 left-0 right-0"></span>
+          <span className="block h-0.5 bg-transparent group-hover:bg-[#ff3c00] transition-all duration-300 absolute bottom-0 left-0 right-0"></span>
         </a>
-        <a onClick={() => scrollToSection(servicesRef)} className='relative group hover:text-[#0B1CB0] transition-colors cursor-pointer'>
+        <a onClick={() => scrollToSection(servicesRef)} className='relative group hover:text-[#ff3c00] transition-colors cursor-pointer'>
           Services
-          <span className="block h-0.5 bg-transparent group-hover:bg-[#0B1CB0] transition-all duration-300 absolute bottom-0 left-0 right-0"></span>
+          <span className="block h-0.5 bg-transparent group-hover:bg-[#ff3c00] transition-all duration-300 absolute bottom-0 left-0 right-0"></span>
         </a>
-        <a onClick={() => scrollToSection(projectsRef)} className='relative group hover:text-[#0B1CB0] transition-colors cursor-pointer'>
+        <a onClick={() => scrollToSection(projectsRef)} className='relative group hover:text-[#ff3c00] transition-colors cursor-pointer'>
           Projects
-          <span className="block h-0.5 bg-transparent group-hover:bg-[#0B1CB0] transition-all duration-300 absolute bottom-0 left-0 right-0"></span>
+          <span className="block h-0.5 bg-transparent group-hover:bg-[#ff3c00] transition-all duration-300 absolute bottom-0 left-0 right-0"></span>
         </a>
       </div>
 
       {/* Contact us button for Desktop */}
-      <div onClick={() => scrollToSection(contactRef)} className='hidden md:block text-sm uppercase font-semibold bg-black px-4 py-3 rounded-md mr-4 hover:bg-[#0A7656] transition-colors cursor-pointer'>
+      <div onClick={() => scrollToSection(contactRef)} className='hidden md:block text-sm uppercase font-semibold bg-black px-4 py-3 text-white rounded-md mr-4 hover:bg-[#ff3c00] transition-colors cursor-pointer'>
         Contact us
       </div>
     </div>

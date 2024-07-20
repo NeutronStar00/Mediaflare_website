@@ -2,7 +2,7 @@ import React from 'react';
 
 const ContactPage = () => {
   return (
-    <div className="min-h-screen bg-emerald-500 text-white flex flex-col justify-between p-8">
+    <div className="min-h-screen text-white flex flex-col justify-between p-8 mt-20" style={{backgroundColor:"#FA8D6B"}}>
       <div className="flex justify-between items-start">
         {/* Add content here if needed */}
       </div>
